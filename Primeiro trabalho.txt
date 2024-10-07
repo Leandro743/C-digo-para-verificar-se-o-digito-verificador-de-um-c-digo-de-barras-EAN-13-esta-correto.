@@ -1,0 +1,82 @@
+//biblioteca que permite o uso de setlocale;
+#include <locale.h>
+//biblioteca que permite o uso de cin >> e cout <<;
+#include <iostream>
+using namespace std;
+
+int main() { 
+    //função que permite o uso de acentos;
+    setlocale(LC_ALL,"Portuguese");
+
+    // dedclara a variavel para o codigo de barras digitado;
+    long long int codBar; 
+    int digVer, soma, mult, numFn;
+
+    // solicita a entrada do valor do codigo de barras;
+    cout << "Digite um codigo de barras de 13 digitos: \n";
+    cin >> codBar; 
+
+    //verifica se o numero digitado é zero ou negativo
+    if (codBar <= 0) {
+        cout << "Código de barras não pode ser zero ou negativo.\n";
+    } else if (codBar > 9999999999999) {
+        //verifica se o numero digitado tenha exatamente 13 digitos
+        cout << "Codigo de barras deve ter exatamente 13 digitos";
+    } else {
+    
+
+        //Salva o codigo verificador digitado
+        numFn = codBar % 10;
+
+        //Pega o valor do D1
+        soma = (((codBar % 100) - (codBar % 10)) / 10) * 3;
+
+        //Pega o valor do D2
+        soma += ((codBar % 1000) - (codBar % 100)) / 100;
+
+        //Pega o valor do D3
+        soma += (((codBar % 10000) - (codBar % 1000)) / 1000) * 3;
+
+        //Pega o valor do D4
+        soma += ((codBar % 100000) - (codBar % 10000)) / 10000;
+
+        //Pega o valor do D5
+        soma += (((codBar % 1000000) - (codBar % 100000)) / 100000) * 3;
+
+        //Pega o valor do D6
+        soma += ((codBar % 10000000) - (codBar % 1000000)) / 1000000;
+
+        //Pega o valor do D7
+        soma += (((codBar % 100000000) - (codBar % 10000000)) / 10000000) * 3;
+
+        //Pega o valor do D8
+        soma += ((codBar % 1000000000) - (codBar % 100000000)) / 100000000;
+
+        //Pega o valor do D9
+        soma += (((codBar % 10000000000) - (codBar % 1000000000)) / 1000000000) * 3;
+
+        //Pega o valor do D10
+        soma += ((codBar % 100000000000) - (codBar % 10000000000)) / 10000000000;
+
+        //Pega o valor do D11
+        soma += (((codBar % 1000000000000) - (codBar % 100000000000)) / 100000000000) * 3;
+
+        //Pega o valor do D12
+        soma += ((codBar % 10000000000000) - (codBar % 1000000000000)) / 1000000000000;
+
+        //faz a multiplicação do valor para o calculo
+        mult = ((soma / 10) + 1) * 10;
+
+        //calcula o digito verificador referente aos numeros digitados
+        digVer = (mult - soma) % 10;
+
+        //faz a  comparação se o digito verificador digitado é igual ao digito verificador calculado
+        if (digVer == numFn) {
+            cout << "O dígito verificador está correto.\n";
+        } else {
+            cout << "O dígito verificador está incorreto.\n";
+        }
+    }
+
+    return 0;
+}
